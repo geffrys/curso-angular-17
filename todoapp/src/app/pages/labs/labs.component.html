@@ -3,3 +3,17 @@
 <!-- Propertie binding, se hace a traves de los [] encerrando la propiedad con estos -->
 <img [src]="imgUrl" alt="lorem picsum">
 <button [disabled]="buttonValue" (click)="onButtonClick()">Boton</button>
+
+<hr>
+
+<!-- Event binding: onclick y ondoubleclick -->
+<button (click)="onButtonClick()">one click button</button>
+<button (dblclick)="onButtonDoubleClick()">double click button</button>
+
+<input type="text" [value]="person.age" (change)="onAgeChange($event)">
+
+<hr>
+
+<!-- Eventos especiales -->
+<input placeholder="keydown" (keydown)="onKeyDown($event)">
+<input placeholder="keyup" type="text" (keydown)="onKeyUp($event)">
