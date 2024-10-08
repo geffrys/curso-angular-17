@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 @Component({
   selector: 'app-labs',
@@ -38,6 +38,15 @@ export class LabsComponent {
   }
   onKeyUp(event: KeyboardEvent) {
     alert(`onkeyup event ${event.key}`);
+  }
+
+  // signals
+  name = signal('John Doe');
+  age = signal(30);
+
+  onNameChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.name.set(input.value);
   }
 
 }
