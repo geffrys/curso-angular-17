@@ -26,4 +26,9 @@ export class TasksComponent {
     input.value = '';
   }
 
+  deleteTask(index: number) {
+    this.tasks.update(tasks => tasks.filter((_, i) => i !== index));
+
+  }
+
 }

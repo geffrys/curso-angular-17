@@ -6,7 +6,8 @@
     <ul>
         @for (task of tasks(); track $index) {
             <li>
-                <span>{{task.title}}</span>
+                <span>{{$index+1+'.'}} {{task.title}}</span>
+                <button (click)="deleteTask($index)">Remove</button>
             </li>
         } @empty {
             <li>No tasks</li>
