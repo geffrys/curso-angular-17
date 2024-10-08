@@ -15,4 +15,15 @@ export class TasksComponent {
     new Todo('Task 3', false)
   ]);
 
+  addTask(event: Event) {
+    event.preventDefault();
+    const input = event.target as HTMLInputElement;
+    const task = new Todo(
+      input.value,
+      false
+    );
+    this.tasks.update(tasks => [...tasks, task]);
+    input.value = '';
+  }
+
 }

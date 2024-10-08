@@ -1,4 +1,16 @@
-<p>tasks works!</p>
+<div>
+    <div>
+        <label for=""></label>
+        <input type="text" (change)="addTask($event)">
+    </div>
+    <ul>
+        @for (task of tasks(); track $index) {
+            <li>
+                <span>{{task.title}}</span>
+            </li>
+        } @empty {
+            <li>No tasks</li>
+        }
+    </ul>
+</div>
 
-<ul>
-</ul>
