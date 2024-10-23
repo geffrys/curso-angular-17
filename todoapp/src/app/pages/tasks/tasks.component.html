@@ -6,6 +6,7 @@
     <ul>
         @for (task of tasks(); track $index) {
             <li>
+                <input type="checkbox" name="" id="" [checked]="task.completed" (change)="updateTask($index)">
                 <span>{{$index+1+'.'}} {{task.title}}</span>
                 <button (click)="deleteTask($index)">Remove</button>
             </li>
@@ -13,5 +14,15 @@
             <li>No tasks</li>
         }
     </ul>
+    
+
+    <div>
+        <h6>valor json del signal</h6>
+        <pre>{{tasks() | json}}</pre>
+    </div>
 </div>
+
+<footer>
+    <span>cantidad de tareas {{tasks().length}}</span>
+</footer>
 
