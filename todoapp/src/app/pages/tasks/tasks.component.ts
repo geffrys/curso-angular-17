@@ -1,11 +1,12 @@
 import { Component, signal } from '@angular/core';
 import { Todo } from '../../models/todo';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-tasks',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.css'
 })
@@ -28,16 +29,32 @@ export class TasksComponent {
     }
   ]);
 
-  addTask(event: Event) {
-    event.preventDefault();
-    const input = event.target as HTMLInputElement;
-    const task = {
-      id: this.tasks().length + 1,
-      title: input.value,
-      completed: false
+  taskField: FormControl = new FormControl('', {
+    nonNullable: true,
+    validators: [
+      Validators.required
+    ]
+  });
+
+  addTask() {
+    if(this.taskField.invalid){
+      return;
     }
-    this.tasks.update(tasks => [...tasks, task]);
-    input.value = '';
+    const taskDescription = this.taskField.value.trim();
+    console.log(taskDescription);
+    
+    if (taskDescription == '') {
+      return;
+    }
+    this.tasks.update(tasks => [
+      ...tasks,
+      {
+        id: tasks.length + 1,
+        title: taskDescription,
+        completed: false
+      }
+    ]);
+    this.taskField.reset();
   }
 
   deleteTask(index: number) {

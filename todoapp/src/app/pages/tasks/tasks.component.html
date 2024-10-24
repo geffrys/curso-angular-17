@@ -1,7 +1,7 @@
 <div>
     <div>
         <label for=""></label>
-        <input type="text" (change)="addTask($event)">
+        <input type="text" [formControl]="taskField" (change)="addTask()">
     </div>
     <ul>
         @for (task of tasks(); track $index) {

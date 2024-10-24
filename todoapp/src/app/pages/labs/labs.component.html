@@ -22,3 +22,12 @@
 <h1>Signals</h1>
 <input type="text" [value]="name()" (change)="onNameChange($event)">
 <p>{{name()}}</p>
+
+<hr>
+<h1>NgSwitch</h1>
+<section [ngSwitch]="name()">
+    <p *ngSwitchCase="'Juan'">Juan</p>
+    <p *ngSwitchCase="'Pedro'">Pedro</p>
+    <p *ngSwitchDefault>Default</p>
+</section>
+<hr>
