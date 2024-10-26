@@ -5,10 +5,19 @@
     </div>
     <ul>
         @for (task of tasks(); track $index) {
-            <li [class.completed]="task.completed">
-                <input type="checkbox" name="" id="" [checked]="task.completed" (change)="updateTask($index)">
-                <span>{{$index+1+'.'}} {{task.title}}</span>
-                <button (click)="deleteTask($index)">Remove</button>
+            <li [class.completed]="task.completed" (dblclick)="editTask($index)" [class.editing]="task.editing">
+                @if(task.editing){
+                    <input 
+                        type="text" 
+                        (keydown.enter)="updateTask(task)"
+                        [formControl]="updateField"
+                    >
+                } @else {
+                    <input type="checkbox" name="" id="" [checked]="task.completed" (change)="completeTask($index)">
+                    <span>{{$index+1+'.'}} {{task.title}}</span>
+                    <button (click)="deleteTask($index)">Remove</button>
+                }
+                
             </li>
         } @empty {
             <li>No tasks</li>

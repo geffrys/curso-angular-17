@@ -36,6 +36,13 @@ export class TasksComponent {
     ]
   });
 
+  updateField: FormControl = new FormControl('',{
+    nonNullable: true,
+    validators: [
+      Validators.required
+    ]
+  })
+
   addTask() {
     if(this.taskField.invalid){
       return;
@@ -62,12 +69,43 @@ export class TasksComponent {
 
   }
 
-  updateTask(index: number) {
+  completeTask(index: number) {
     this.tasks.update(tasks => tasks.map((task, i) => {
       if (i === index) {
         task.completed = !task.completed;
       }
       return task;
+    }));
+  }
+
+  editTask(index: number) {
+    this.tasks.update(tasks => tasks.map((task, i) => {
+      if (i === index) {
+        task.editing = !task.editing;
+        if(task.editing){
+          this.updateField.setValue(task.title);
+        }
+      } else{
+        task.editing = false; // para que solo se pueda editar una tarea a la vez
+      }
+      return task;
+    }));
+  }
+
+  updateTask(task: Todo){
+    console.log(this.updateField);
+    
+    if(this.updateField.invalid){
+      return;
+    }
+    this.tasks.update(tasks => tasks.map(t => {      
+      if(t.id === task.id){
+        task.title = this.updateField.value;
+        this.updateField.reset();
+        task.editing = false;
+        return task;
+      }
+      return t;
     }));
   }
 
