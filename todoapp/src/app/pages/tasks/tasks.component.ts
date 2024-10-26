@@ -43,6 +43,8 @@ export class TasksComponent {
     ]
   })
 
+  filter = signal('all');
+
   addTask() {
     if(this.taskField.invalid){
       return;
@@ -108,5 +110,7 @@ export class TasksComponent {
       return t;
     }));
   }
+
+
 
 }
