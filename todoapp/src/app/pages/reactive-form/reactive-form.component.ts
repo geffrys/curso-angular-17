@@ -10,6 +10,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 })
 export class ReactiveFormComponent {
   colorField = new FormControl();
+  rangeField = new FormControl(20);
 
   constructor() {
     this.colorField.valueChanges.subscribe(value => {

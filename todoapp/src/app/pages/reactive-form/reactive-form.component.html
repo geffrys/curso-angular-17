@@ -4,3 +4,14 @@
 
 <input type="color" [formControl]="colorField">
 <span>{{colorField.value}}</span>
+
+<svg>
+    <circle cx="50" cy="50" r="40" [attr.fill]="colorField.value"></circle>
+</svg>
+
+<hr>
+
+<input type="range" [formControl]="rangeField">
+<svg>
+    <rect x="10" y="10" [style.width]="rangeField.value" height="20" [attr.fill]="colorField.value"/>
+</svg>
