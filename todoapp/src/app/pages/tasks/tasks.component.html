@@ -4,7 +4,7 @@
         <input type="text" [formControl]="taskField" (change)="addTask()">
     </div>
     <ul>
-        @for (task of tasks(); track $index) {
+        @for (task of filteredTasks(); track $index) {
             <li [class.completed]="task.completed" (dblclick)="editTask($index)" [class.editing]="task.editing">
                 @if(task.editing){
                     <input 
@@ -25,9 +25,9 @@
     </ul>
     
 
-    <div *ngIf="tasks().length>0; else elseblock">
+    <div *ngIf="filteredTasks().length>0; else elseblock">
         <h6>valor json del signal</h6>
-        <pre> {{ tasks() | json }}</pre>
+        <pre> {{ filteredTasks() | json }}</pre>
     </div>
     <ng-template #elseblock>
         <h6>No hay valores en la signal</h6>
@@ -41,5 +41,14 @@
     } @else {
         <span>task</span>
     }
+
+    <div>
+        <h3>Filter</h3>
+        <div>
+            <button (click)="changeFilter(TASK_FILTER.ALL)">All</button>
+            <button (click)="changeFilter(TASK_FILTER.ACTIVE)">Active</button>
+            <button (click)="changeFilter(TASK_FILTER.COMPLETED)">Completed</button>
+        </div>
+    </div>
 </footer>
 

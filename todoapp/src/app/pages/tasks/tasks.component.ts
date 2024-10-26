@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { Todo } from '../../models/todo';
+import { TaskFilter } from '../../models/states';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormControl, Validators } from '@angular/forms';
 
@@ -11,6 +12,13 @@ import { ReactiveFormsModule, FormControl, Validators } from '@angular/forms';
   styleUrl: './tasks.component.css'
 })
 export class TasksComponent {
+  
+  /* UTILIDADES */
+
+  TASK_FILTER = TaskFilter;
+
+  /* ESTADOS */
+
   tasks = signal<Todo[]>([
     {
       id: 1,
@@ -43,7 +51,22 @@ export class TasksComponent {
     ]
   })
 
-  filter = signal('all');
+  filter = signal(TaskFilter.ALL);
+
+  /* COMPUTED */
+
+  filteredTasks = computed(()=> {
+    const internalFilter = this.filter();
+    const tasks = this.tasks();
+    const filterRecord: Record<TaskFilter, () => Todo[]> = {
+      [TaskFilter.ALL]: () => tasks,
+      [TaskFilter.ACTIVE]: () => tasks.filter(task => !task.completed),
+      [TaskFilter.COMPLETED]: () => tasks.filter(task => task.completed)
+    }
+    return filterRecord[internalFilter]();
+  })
+
+  /* ACCIONES */
 
   addTask() {
     if(this.taskField.invalid){
@@ -112,5 +135,8 @@ export class TasksComponent {
   }
 
 
+  changeFilter(filter: TaskFilter) {
+    this.filter.set(filter);
+  }
 
 }
